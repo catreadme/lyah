@@ -103,3 +103,13 @@ bmis ((w,h):xs) = (calc w h) : bmis xs
 bmis' :: (RealFloat a) => [(a, a)] -> [a]
 bmis' xs = [bmi w h | (w, h) <- xs]
   where bmi w h = w/h^2
+
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h =
+  let sideArea = 2*r*pi*h
+      topArea = r^2*pi
+  in sideArea + 2 * topArea
+
+head'' :: [a] -> a
+head'' xs = case xs of [] -> error "oh boy.."
+                       (x:_) -> x
