@@ -17,3 +17,7 @@ check x (Node s left right)
   | x == s = True
   | x < s = check x left
   | x > s = check x right
+
+instance Functor Tree where
+  fmap f Empty = Empty
+  fmap f (Node x left right) = Node (f x) (fmap f left) (fmap f right)
