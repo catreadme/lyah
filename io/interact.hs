@@ -1,8 +1,7 @@
 import Data.Char
 
 main = do
-  contents <- getContents
-  putStr $ shortLines contents
+  interact shortLines
 
 shortLines :: String -> String
 shortLines xs =
@@ -10,3 +9,6 @@ shortLines xs =
       shortLines = filter (\line -> length line < 10) allLines
       result = unlines shortLines
   in result
+
+-- oneliner
+-- main = interact $ unlines . filter ((<10) . length) .lines
