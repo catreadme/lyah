@@ -27,6 +27,12 @@ instance Applicative Vielleicht where
   (Einfach f) <*> x = fmap f x
 -- (pure (+1) <*> Einfach 1) == (fmap (+1) $ Einfach 1)
 
+instance Monad Vielleicht where
+  return x = Einfach x
+  (>>=) (Einfach x) f = f x
+  (>>=) Nichts _ = Nichts
+  fail _ = Nichts
+
 ---------------------------------------------------------------
 
 sequenceA' :: (Applicative f) => [f a] -> f [a]
@@ -46,3 +52,9 @@ newtype Pair b a = Pair { getPair :: (a,b) }
 
 instance Functor (Pair c) where
   fmap f (Pair (x,y)) = Pair (f x, y)
+
+---------------------------------------------------------------
+
+applyMaybe :: Maybe a -> (a -> Maybe b) -> Maybe b
+applyMaybe Nothing f = Nothing
+applyMaybe (Just x) f = f x
