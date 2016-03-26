@@ -1,3 +1,5 @@
+import Control.Applicative
+
 data CMaybe a = CNothing | CJust Int a
   deriving (Show, Eq)
 
@@ -24,3 +26,23 @@ instance Applicative Vielleicht where
   Nichts <*> _ = Nichts
   (Einfach f) <*> x = fmap f x
 -- (pure (+1) <*> Einfach 1) == (fmap (+1) $ Einfach 1)
+
+---------------------------------------------------------------
+
+sequenceA' :: (Applicative f) => [f a] -> f [a]
+sequenceA' [] = pure []
+sequenceA' (x:xs) = (:) <$> x <*> sequenceA xs
+
+sequenceA'' :: (Applicative f) => [f a] -> f [a]
+sequenceA'' = foldr (liftA2 (:)) (pure [])
+
+---------------------------------------------------------------
+
+newtype CharList = CharList { getCharList :: [Char]}
+  deriving (Eq, Show)
+
+newtype Pair b a = Pair { getPair :: (a,b) }
+  deriving (Show)
+
+instance Functor (Pair c) where
+  fmap f (Pair (x,y)) = Pair (f x, y)
