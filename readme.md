@@ -13,5 +13,5 @@ The book can be read online at [learnyouahaskell.com](http://learnyouahaskell.co
 * list comprehensions are a good fit for code challenges
 * guards make the code extremely readable
 * use generic versions of functions like `length` and `take`
-* if you speak a different language than english, implement types like
-`Maybe` or `Either` in that language, it's a great exercise (e.g. `data Vielleicht a = Nichts | Einfach a`, then make the accordings instances)
+* if you speak a different language than English, implement types like
+`Maybe` or `Either` in that language, it's a great exercise (e.g. `data Vielleicht a = Nichts | Einfach a`, then make the according instances)
