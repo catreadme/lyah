@@ -15,3 +15,7 @@ The book can be read online at [learnyouahaskell.com](http://learnyouahaskell.co
 * use generic versions of functions like `length` and `take`
 * if you speak a different language than English, implement types like
 `Maybe` or `Either` in that language, it's a great exercise (e.g. `data Vielleicht a = Nichts | Einfach a`, then make the according instances)
+
+### Notes
+The notes on this book turned into a vague reference for Haskell and
+can be found at [doc.robelv.net](https://doc.robelv.net/2016/03/programming/haskell/haskell-reference/)
