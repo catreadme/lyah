@@ -100,6 +100,10 @@ ta = fmap (+1) tt
 
  {-
    Implementing the "Funtor" typeclass for the "Either" type.
+
+   Since "Functor" takes a type constructor of kind "* -> *", Either has
+   to be partially applid in order to be made a "Functor". (Either is of kind
+   "* -> * -> *").
  -}
 
 instance Functor (Either a) where
