@@ -15,8 +15,7 @@
     - Either(Left, Right)
       To be able to implement "Functor" for the "Either" type.
 -}
-import Prelude (
-               (+)
+import Prelude ( (+)
                , Show
                , Maybe(Just, Nothing)
                , Either(Left, Right)
@@ -34,7 +33,7 @@ class Functor f where
   fmap :: (a -> b) -> f a -> f b
 
 {-
-  Implementing the "Funtor" typeclass for the "List" type.
+  Implementing the "Functor" typeclass for the "List" type.
 
   The implementation should look familiar. Here's how the well known "map"
   is defined in Prelude.
@@ -51,7 +50,7 @@ la = fmap (+1) [1] -- [2]
 lb = fmap (+1) [1..5] -- [2,3,4,5,6]
 
 {-
-  Implementing the "Funtor" typeclass for the "Maybe" type.
+  Implementing the "Functor" typeclass for the "Maybe" type.
 -}
 instance Functor Maybe where
   fmap _ Nothing = Nothing
@@ -62,7 +61,7 @@ ma = fmap (+1) (Just 1) -- Just 2
 mb = fmap (+1) Nothing -- Nothing
 
 {-
-  Implementing the "Funtor" typeclass for a "Tree" type.
+  Implementing the "Functor" typeclass for a "Tree" type.
 -}
 
 -- First the data type is declared.
@@ -99,10 +98,10 @@ ta = fmap (+1) tt
  -}
 
  {-
-   Implementing the "Funtor" typeclass for the "Either" type.
+   Implementing the "Functor" typeclass for the "Either" type.
 
    Since "Functor" takes a type constructor of kind "* -> *", Either has
-   to be partially applid in order to be made a "Functor". (Either is of kind
+   to be partially applied in order to be made a "Functor". (Either is of kind
    "* -> * -> *").
  -}
 
