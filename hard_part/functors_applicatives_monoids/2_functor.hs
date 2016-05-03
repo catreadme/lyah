@@ -8,7 +8,7 @@
   Those are the things needed from Preludede.
     - (++)
       To be able to write some examples.
-    - (++)
+    - (+)
       To be able to write some examples.
     - IO
       To be able to implement "Functor" for the "IO" type.
