@@ -16,7 +16,9 @@
 import Prelude ( (+)
                , Int
                , Maybe(Nothing, Just)
+               , Show
                )
+import Data.List
 
 {-
   The Functor class again.
@@ -31,7 +33,7 @@ class Functor f where
   "Take a function from "a" to "b" with a context "f", an "a" with some context,
   and return a "b" with that same context"
 -}
-class (Functor f) => Appliicative f where
+class (Functor f) => Applicative f where
   pure :: a -> f a
   (<*>) :: f (a -> b) -> f a -> f b
 
@@ -50,7 +52,7 @@ instance Functor Maybe where
     (<*>) :: f (a -> b) -> f a -> f b
     (Just f) <*> (Just x) = Just (f x)
 -}
-instance Appliicative Maybe where
+instance Applicative Maybe where
   pure x = Just x
   Nothing <*> _ = Nothing
   (Just f) <*> x = fmap f x
@@ -61,5 +63,19 @@ instance Appliicative Maybe where
 (<$>) :: (Functor f) => (a -> b) -> f a -> f b
 f <$> x = fmap f x
 
--- Continue:
--- Lists (actually the list type constructor, []) are applicative functors.
+{-
+  Implementing the "Applicative" typeclass for the "(->)" type.
+
+  Since "Applicative" takes a type constructor of kind "* -> *", "->" has
+  to be partially applied in order to be made an "Applicative". ("->" is of kind
+  "* -> * -> *").
+-}
+instance Functor ((->) a) where
+  fmap f g = (\x -> f (g x))
+
+instance Applicative ((->) a) where
+  pure x = (\_-> x)
+  f <*> g = (\x -> f x (g x))
+
+-- Next:
+--  Another instance of Applicative is (->) r
