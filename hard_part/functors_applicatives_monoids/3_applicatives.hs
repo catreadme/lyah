@@ -57,14 +57,25 @@ instance Applicative Maybe where
   Nothing <*> _ = Nothing
   (Just f) <*> x = fmap f x
 
+-- Examples:
+ma = Just (+5) <*> Just 2 -- Just 7
+mb = pure (+) <*> Just 5 <*> Just 2 -- Just 7
+mc = fmap (+) (Just 5) <*> Just 2 -- Just 7
+
 {-
   "(<$>)" is actually just "fmap" as an infix operator.
 -}
 (<$>) :: (Functor f) => (a -> b) -> f a -> f b
 f <$> x = fmap f x
 
+-- Example:
+md = fmap (+) (Just 5) <*> Just 2 -- Just 7
+me = (+) <$> Just 5 <*> Just 2 -- Just 7
+
+
 {-
   Implementing the "Applicative" typeclass for the "(->)" type.
+  Although this is totally possible, it is not often used in practical code.
 
   Since "Applicative" takes a type constructor of kind "* -> *", "->" has
   to be partially applied in order to be made an "Applicative". ("->" is of kind
@@ -77,5 +88,6 @@ instance Applicative ((->) a) where
   pure x = (\_-> x)
   f <*> g = (\x -> f x (g x))
 
--- Next:
---  Another instance of Applicative is (->) r
+-- Examples:
+aa = ((+) <$> (+5) <*> (+50)) 5 -- 65
+ab = (pure 5) "test" -- 5
