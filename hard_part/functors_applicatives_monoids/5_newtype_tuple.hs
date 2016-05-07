@@ -53,16 +53,14 @@ ta = fmap (+5) (1,1) -- (1,6)
 {-
   This is how to implement the fmap we want.
 -}
-
 newtype Pair a b = Pair (b, a)
   deriving (Show)
 
+-- Example:
 pa = Pair (1 :: Int, "" :: String) -- :: Pair String Int
 
 instance Functor (Pair a) where
   fmap f (Pair (x,y)) = Pair (f x, y)
 
+-- Example:
 pb = fmap (+5) (Pair (1 :: Int,"" :: String)) -- Pair (6,1)
-
-data Z a b = Z (b,a)
-  deriving (Show)
