@@ -22,7 +22,8 @@ import Prelude ( (+)
                , Show
                , Num
                )
-import Data.Foldable(foldl, foldr, foldl1, foldr1)
+
+import Data.Foldable(foldr)
 
 {-
   The Monoid class defines 3 functions.
@@ -164,3 +165,18 @@ instance Monoid (Last a) where
   x `mappend` Last Nothing = x
 
 -- TODO Foldable and foldMap
+
+{-
+  Reminder of how foldl works.
+-}
+foldl :: (b -> a -> b) -> b -> [a] -> b
+foldl _ s [] = s
+foldl f s (x:xs) = foldl f (f s x) xs
+{-
+  foldl (+) 0 [1,2,3]
+    foldl (+) ((+) 0 1) [2,3]
+      foldl (+) ((+) ((+) 0 1) 2) [3]
+        foldl (+) ((+) ((+) ((+) 0 1) 2) 3) []
+          And since "foldl _ s [] = s" we return s which is:
+            ((+) ((+) ((+) 0 1) 2) 3)
+-}
