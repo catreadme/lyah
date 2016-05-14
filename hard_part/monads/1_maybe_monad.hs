@@ -16,6 +16,10 @@
       To be able to implement "Functor" for the "Either" type.
 -}
 import Prelude ( (+)
+               , (++)
+               , (<$>)
+               , (<*>)
+               , show
                , Show
                , String
                , Int
@@ -64,5 +68,63 @@ ma = return 5 :: Maybe Int -- Just 5
 mb = Just 5 >>= (\x -> Just (x+1)) -- Just 6
 mc = Just 5 >>= (\x -> return (x+1)) -- Just 6
 
--- next:
---  do notation
+-- A computation that might fail.
+kickLastElement :: [a] -> Maybe [a]
+kickLastElement [] = Nothing
+kickLastElement (x:[]) = Just []
+kickLastElement (x:xs) = (:) <$> Just x <*> Just xs >>= kickLastElement
+
+-- Examples:
+ka = kickLastElement [1,2] -- Just [1]
+kb = kickLastElement [1] -- Just []
+kc = kickLastElement [] -- Nothing
+
+kd = Just [1,2] >>= kickLastElement -- Just [1]
+ke = return [1,2] >>= kickLastElement -- Just [1]
+
+kf = return [1,2,3,4] >>= kickLastElement >>= kickLastElement >>= kickLastElement -- Just [1]
+kg = return [1,2] >>= kickLastElement >>= kickLastElement -- Just []
+kh = return [1,2] >>= kickLastElement >>= kickLastElement >>= kickLastElement -- Nothing
+
+-- Make the computation fail intentionally:
+ki = return [1,2,3] >>= kickLastElement >> Nothing >>= kickLastElement -- Nothing
+
+{-
+  do Notation
+-}
+da = Just 5 >>= (\x -> Just "!" >>= (\y -> Just (show x ++ y)))
+
+db = Just 5   >>= (\x ->
+     Just "!" >>= (\y ->
+     Just (show x ++ y)))
+
+dc = do
+  x <- Just 5
+  y <- Just "!"
+  Just (show x ++ y)
+
+dd = do
+  x <- Just 5
+  y <- Just "!"
+  return (show x ++ y)
+
+-- Example: kickLastElement
+de = return [1,2] >>= kickLastElement >>= kickLastElement -- Just []
+
+df = do
+  list <- return [1,2]
+  kickOne <- kickLastElement list
+  kickLastElement kickOne
+  -- Just []
+
+-- Example: pattern matching
+dg = do
+  (x:xs) <- Just "test"
+  return x
+  -- Just 't'
+
+-- When pattern matching fails inside do notation, "fail" is called.
+dh = do
+  (x:[]) <- Just "test"
+  return x
+  -- Nothing
