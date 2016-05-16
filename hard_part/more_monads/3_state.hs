@@ -67,3 +67,20 @@ tossThreeCoins' = do
   return (a,b,c)
 
 ra = runState tossThreeCoins' (mkStdGen 51)
+
+{-
+  Whatever
+-}
+type Mosquitos = Int
+
+killMosquitos' :: Int -> Mosquitos -> ((), Mosquitos)
+killMosquitos' k m = ((),(m - k))
+
+killMosquitos :: Int -> State Mosquitos ()
+killMosquitos k = state $ \m -> ((),(m-k))
+
+mos = do
+  killMosquitos 1
+  killMosquitos 2
+
+ka = runState mos 5 -- ((),2)
