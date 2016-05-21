@@ -91,3 +91,10 @@ adb = addSmall 10 5 -- Nothing
 
 afa = foldM addSmall 0 [1,2,3] -- Just 6
 afb = foldM addSmall 0 [1,20] -- Nothing
+
+{-
+  (<=<) :: Monad m => (b -> m c) -> (a -> m b) -> (a -> m c)
+  Function composition of monadic functions
+-}
+ca = (\x -> Just (x+1)) <=< (\x -> Just (x*2))
+cb = ca 5 -- Just 11
